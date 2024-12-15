@@ -56,3 +56,21 @@ self.addEventListener('activate', event => {
             })
     );
   });
+
+  function monitorOnlineStatus() {
+    setInterval(() => {
+      if (isOnline()) {
+        caches.open(CACHE_NAME)
+            .then(cache => {
+          return cache.keys().then(keys => {
+              if (keys.length === 0) {
+            return cache.addAll(urlsToCache);
+              }
+          });
+            })
+      } else {
+      }
+    }, 500);
+  }
+
+  monitorOnlineStatus();
